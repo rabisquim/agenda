@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Agenda Telefônica</title>
+  </head>
+  <body>
+    <h1>Agenda Telefônica</h1>
+    <form>
+      <label for="name">Nome completo:</label>
+      <input type="text" id="name" name="name"><br><br>
+      <label for="phone">Telefone:</label>
+      <input type="tel" id="phone" name="phone"><br><br>
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" name="email"><br><br>
+      <button type="button" onclick="addContact()">Adicionar contato</button>
+      <button type="button" onclick="updateContact()">Atualizar contato</button>
+      <button type="button" onclick="deleteContact()">Excluir contato</button>
+    </form>
+    <br>
+    <table id="contacts">
+      <tr>
+        <th>Nome</th>
+        <th>Telefone</th>
+        <th>E-mail</th>
+      </tr>
+    </table>
+    <script>
+      var contacts = [];
+      
+      function addContact() {
+        var name = document.getElementById("name").value;
+        var phone = document.getElementById("phone").value;
+        var email = document.getElementById("email").value;
+        contacts.push({name: name, phone: phone, email: email});
+        displayContacts();
+        clearForm();
+      }
+      
+      function updateContact() {
+        var name = document.getElementById("name").value;
+        var phone = document.getElementById("phone").value;
+        var email = document.getElementById("email").value;
+        for (var i = 0; i < contacts.length; i++) {
+          if (contacts[i].name === name) {
+            contacts[i].phone = phone;
+            contacts[i].email = email;
+            break;
+          }
+        }
+        displayContacts();
+        clearForm();
+      }
+      
+      function deleteContact() {
+        var name = document.getElementById("name").value;
+        for (var i = 0; i < contacts.length; i++) {
+          if (contacts[i].name === name) {
+            contacts.splice(i, 1);
+            break;
+          }
+        }
+        displayContacts();
+        clearForm();
+      }
+      
+      function displayContacts() {
+        var table = document.getElementById("contacts");
+        table.innerHTML = "<tr><th>Nome</th><th>Telefone</th><th>E-mail</th></tr>";
+        for (var i = 0; i < contacts.length; i++) {
+          var row = table.insertRow(-1);
+          var nameCell = row.insertCell(0);
+          var phoneCell = row.insertCell(1);
+          var emailCell = row.insertCell(2);
+          nameCell.innerHTML = contacts[i].name;
+          phoneCell.innerHTML = contacts[i].phone;
+          emailCell.innerHTML = contacts[i].email;
+        }
+      }
+      
+      function clearForm() {
+        document.getElementById("name").value = "";
+        document.getElementById("phone").value = "";
+        document.getElementById("email").value = "";
+      }
+    </script>
+  </body>
+</html>
